@@ -1,5 +1,13 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+// import Vue from "vue";
+// import VueMaterial from "vue-material";
+// import "vue-material/dist/vue-material.min.css";
 
-createApp(App).use(router).mount('#app')
+// Vue.use(VueMaterial);
+
+createApp(App)
+  .use(router)
+  //   .use(VueMaterial)
+  .mount("#app");
