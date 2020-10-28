@@ -7,7 +7,7 @@
 // @ is an alias to /src
 import Logo from "@/components/Logo";
 import City from "@/components/City";
-import data from "@/components/data";
+// import data from "@/components/data";
 export default {
   name: "Home",
   components: {
