@@ -4,16 +4,16 @@
       <ul class="ant-carousel-list">
         <li class="ant-carousel-element">
           <img src="images/img1.jpg" alt="1" />
-          <p>Описание 1</p>
+          <p v-for="(degreec, index) in degreec" :key="index"></p>
         </li>
         <li class="ant-carousel-element">
           <img src=" images /img2.jpg" alt="2" />
-          <p>Описание2</p>
+          <p></p>
         </li>
         …
         <li class="ant-carousel-element">
           <img src=" images /imgN.jpg" alt="N" />
-          <p>Описание N</p>
+          <p></p>
         </li>
       </ul>
     </div>
@@ -26,7 +26,11 @@
 export default {
   name: "Weather",
   props: {
-    coordinates: {
+    weather: {
+      type: Object,
+      required: true,
+    },
+    degreec: {
       type: Object,
       required: true,
     },
@@ -36,9 +40,7 @@ export default {
     return {};
   },
   computed: {},
-  methods: {
-   
-  },
+  methods: {},
 };
 </script>
 <style lang="scss"></style>

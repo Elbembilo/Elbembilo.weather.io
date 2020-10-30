@@ -45,7 +45,7 @@ export default {
   computed: {},
   methods: {
     mySearchFunction() {
-      if (this.value && this.value?.length <= 3) return false;
+      if (this.value && this.value?.length <= 2) return false;
       else {
         this.Visable = !this.Visable;
         console.log(this.value, "value");
@@ -77,7 +77,7 @@ export default {
       var coordinatesSplit = location.pos.split(" ");
       console.log(coordinatesSplit);
       this.axios
-        .get("https://api.openweathermap.org/data/2.5/forecast/daily", {
+        .get("https://api.openweathermap.org/data/2.5/forecast", {
           params: {
             lat: coordinatesSplit[0],
             lon: coordinatesSplit[1],
@@ -86,11 +86,12 @@ export default {
           },
         })
         .then((response) => {
-          this.dataWeather = response.data.response.list;
+          this.dataWeather = response.data.list;
+          console.log(response);
           console.log(this.dataWeather);
+          this.$emit("weather", response.data.list.weather.main);
+          this.$emit("degreec", response.data.list.temp.day - 273, 15);
         });
-
-      // this.$emit("coordinates", result.GeoObject.Point);
 
       // console.log(result.GeoObject.description);
     },

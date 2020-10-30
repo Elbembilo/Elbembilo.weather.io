@@ -1,7 +1,7 @@
 <template>
   <Logo />
-  <City @coordinates="coordinates" />
-  <Weather :coordinates="coordinates" />
+  <City @weather="weather" @degreec="degreec" />
+  <Weather :weather="weather" :degreec="degreec" />
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
     return {};
   },
   methods: {
-    coordinates(e) {
+    weather(e) {
       console.log(e);
     },
   },
