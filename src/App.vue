@@ -1,26 +1,28 @@
 <template>
   <Logo />
-  <City options="options" />
+  <City @coordinates="coordinates" />
+  <Weather :coordinates="coordinates" />
 </template>
 
 <script>
 // @ is an alias to /src
 import Logo from "@/components/Logo";
 import City from "@/components/City";
-// import data from "@/components/data";
+import Weather from "@/components/Weather";
 export default {
   name: "Home",
   components: {
     Logo,
     City,
+    Weather,
   },
   data() {
-    return {
-      options: [
-        { name: "weather", value: "degrees" },
-        { name: "weather", value: "degrees 10" },
-      ],
-    };
+    return {};
+  },
+  methods: {
+    coordinates(e) {
+      console.log(e);
+    },
   },
 };
 </script>

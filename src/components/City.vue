@@ -12,6 +12,7 @@
           v-for="(result, index) in results"
           :key="index"
           v-on:click="setType(result)"
+          v-show="Visable"
         >
           {{ result.GeoObject.metaDataProperty.GeocoderMetaData.text }}
         </li>
@@ -37,31 +38,61 @@ export default {
       value: undefined,
       loading: true,
       errored: false,
+      Visable: true,
+      dataWeather: [],
     };
   },
   computed: {},
   methods: {
     mySearchFunction() {
-      if (this.value.length < 3) return false;
-      console.log(this.value);
-      this.axios
-        .get(
-          "https://geocode-maps.yandex.ru/1.x/?format=json&apikey=7d284bac-c91d-4a46-ae48-aba35ba0080e&geocode=" +
-            this.value
-        )
-        .then((response) => {
-          this.results =
-            response.data.response.GeoObjectCollection.featureMember;
-          console.log(this.results);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errored = true;
-        });
+      if (this.value && this.value?.length <= 3) return false;
+      else {
+        this.Visable = !this.Visable;
+        console.log(this.value, "value");
+        this.axios
+          .get("https://geocode-maps.yandex.ru/1.x/", {
+            params: {
+              format: "json",
+              apikey: "7d284bac-c91d-4a46-ae48-aba35ba0080e",
+              geocode: this.value,
+            },
+          })
+          .then((response) => {
+            this.results =
+              response.data.response.GeoObjectCollection.featureMember;
+            // console.log(this.results);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.errored = true;
+          });
+      }
     },
     setType(result) {
-      // this.value = result.GeoObjectCollection.description;
-      console.log(result[0]);
+      this.value =
+        result.GeoObject.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AddressLine;
+      this.Visable = !this.Visable;
+      let location = result.GeoObject.Point;
+
+      var coordinatesSplit = location.pos.split(" ");
+      console.log(coordinatesSplit);
+      this.axios
+        .get("https://api.openweathermap.org/data/2.5/forecast/daily", {
+          params: {
+            lat: coordinatesSplit[0],
+            lon: coordinatesSplit[1],
+            cnt: "16",
+            appid: "828beab3d73557dad05ad548fcded3ac",
+          },
+        })
+        .then((response) => {
+          this.dataWeather = response.data.response.list;
+          console.log(this.dataWeather);
+        });
+
+      // this.$emit("coordinates", result.GeoObject.Point);
+
+      // console.log(result.GeoObject.description);
     },
   },
 };
@@ -79,7 +110,7 @@ export default {
       margin: 10px auto;
       display: block;
       margin-bottom: 0px;
-      padding: 5px 13px;
+      padding: 10px 13px;
     }
     input:focus {
       outline: none;
@@ -98,7 +129,7 @@ export default {
         font-size: 21px;
         text-align: start;
         color: black;
-        padding: 5px 13px;
+        padding: 10px 13px;
       }
       li:hover {
         background-color: rgba(1, 155, 1, 0.945);
