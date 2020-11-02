@@ -1,7 +1,7 @@
 <template>
   <Logo />
-  <City @weather="weather" @degreec="degreec" />
-  <Weather :weather="weather" :degreec="degreec" />
+  <City @weather="weatherSet" />
+  <Weather :weather="weather" />
 </template>
 
 <script>
@@ -17,11 +17,13 @@ export default {
     Weather,
   },
   data() {
-    return {};
+    return {
+      weather: [],
+    };
   },
   methods: {
-    weather(e) {
-      console.log(e);
+    weatherSet(weatherArray) {
+      this.weather = weatherArray;
     },
   },
 };

@@ -4,7 +4,8 @@
       <ul class="ant-carousel-list">
         <li class="ant-carousel-element">
           <img src="images/img1.jpg" alt="1" />
-          <p v-for="(degreec, index) in degreec" :key="index"></p>
+          <p v-for="(degreec, index) in weather" :key="index"></p>
+          <p>{{ degreec.temp.day }}</p>
         </li>
         <li class="ant-carousel-element">
           <img src=" images /img2.jpg" alt="2" />
@@ -27,11 +28,7 @@ export default {
   name: "Weather",
   props: {
     weather: {
-      type: Object,
-      required: true,
-    },
-    degreec: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
@@ -40,7 +37,14 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    // weatherDegreec(result) {
+    //   this.weather = temp.day - 273;
+    // },
+    // weatherMain() {
+    //   this.weather = weather.main;
+    // },
+  },
 };
 </script>
 <style lang="scss"></style>

@@ -74,7 +74,7 @@ export default {
       this.Visable = !this.Visable;
       let location = result.GeoObject.Point;
 
-      var coordinatesSplit = location.pos.split(" ");
+      let coordinatesSplit = location.pos.split(" ");
       console.log(coordinatesSplit);
       this.axios
         .get("https://api.openweathermap.org/data/2.5/forecast", {
@@ -86,11 +86,10 @@ export default {
           },
         })
         .then((response) => {
-          this.dataWeather = response.data.list;
-          console.log(response);
-          console.log(this.dataWeather);
-          this.$emit("weather", response.data.list.weather.main);
-          this.$emit("degreec", response.data.list.temp.day - 273, 15);
+          // this.dataWeather = response.data.list;
+          // console.log(response);
+          // console.log(this.dataWeather);
+          this.$emit("weather", response.data.list);
         });
 
       // console.log(result.GeoObject.description);
