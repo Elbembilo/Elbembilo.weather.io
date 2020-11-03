@@ -1,7 +1,7 @@
 <template>
   <Logo />
   <City @weather="weatherSet" />
-  <Weather :weather="weather" />
+  <Weather :weatherData="weather" />
 </template>
 
 <script>
@@ -24,6 +24,7 @@ export default {
   methods: {
     weatherSet(weatherArray) {
       this.weather = weatherArray;
+      console.log(weatherArray);
     },
   },
 };
@@ -42,6 +43,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #fff;
+  color: rgb(46, 45, 45);
 }
 </style>

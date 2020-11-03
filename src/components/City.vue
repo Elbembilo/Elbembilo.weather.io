@@ -79,8 +79,8 @@ export default {
       this.axios
         .get("https://api.openweathermap.org/data/2.5/forecast", {
           params: {
-            lat: coordinatesSplit[0],
-            lon: coordinatesSplit[1],
+            lat: coordinatesSplit[1],
+            lon: coordinatesSplit[0],
             cnt: "16",
             appid: "828beab3d73557dad05ad548fcded3ac",
           },
