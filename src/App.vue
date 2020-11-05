@@ -43,6 +43,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: rgb(46, 45, 45);
+  color: #ffffff;
 }
 </style>

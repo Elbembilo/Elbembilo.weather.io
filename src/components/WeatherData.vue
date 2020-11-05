@@ -1,53 +1,56 @@
 <template>
-  <!-- <p class="temp" v-for="(degreec, index) in weatherData" :key="index">
-    {{ weatherDegreec(degreec.main.temp) }}
-  </p> -->
-  <div class="icon sun-shower">
-    <div class="cloud"></div>
-    <div class="sun">
-      <div class="rays"></div>
-    </div>
-    <div class="rain"></div>
+  <div>
+    {{ weatherType }}
   </div>
+  <!-- <div class="wrapperWeather">
+    <div class="icon sun-shower">
+      <div class="cloud"></div>
+      <div class="sun">
+        <div class="rays"></div>
+      </div>
+      <div class="rain"></div>
+    </div>
+  </div> -->
 
-  <div class="icon thunder-storm">
+  <!-- <div class="icon thunder-storm">
     <div class="cloud"></div>
     <div class="lightning">
       <div class="bolt"></div>
       <div class="bolt"></div>
     </div>
-  </div>
-
-  <div class="icon cloudy">
+  </div> -->
+  <!-- 
+  <div class="icon cloudy" v-if="weatherType=cloud">
     <div class="cloud"></div>
     <div class="cloud"></div>
-  </div>
+  </div> -->
 
-  <div class="icon flurries">
+  <!-- <div class="icon flurries">
     <div class="cloud"></div>
     <div class="snow">
       <div class="flake"></div>
       <div class="flake"></div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="icon sunny">
+  <!-- <div class="icon sunny">
     <div class="sun">
       <div class="rays"></div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="icon rainy">
+  <!-- <div class="icon rainy" v-if="weatherType === 'rain'">
     <div class="cloud"></div>
     <div class="rain"></div>
-  </div>
+  </div> -->
 </template>
+
 <script>
 export default {
   name: "Weather",
   props: {
-    weatherData: {
-      type: Array,
+    weatherType: {
+      type: String,
       required: true,
     },
   },
@@ -57,19 +60,13 @@ export default {
     };
   },
   computed: {},
-  methods: {
-    weatherDegreec(temp) {
-      console.log(typeof temp);
-      return (temp - 273.13).toFixed(2);
-    },
-
-    // weatherMain() {
-    //   this.weather = weather.main;
-    // },
-  },
+  methods: {},
 };
 </script>
 <style lang="scss">
+.wrapperWeather {
+  width: 300px;
+}
 .icon {
   position: relative;
   display: inline-block;
