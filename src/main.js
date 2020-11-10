@@ -4,6 +4,7 @@ import router from "./router";
 import "vue-material/dist/vue-material.min.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import moment from "moment";
 
 // Vue();
 // axios();
@@ -12,4 +13,5 @@ import VueAxios from "vue-axios";
 createApp(App)
   .use(router)
   .use(VueAxios, axios)
+  .use(moment)
   .mount("#app");

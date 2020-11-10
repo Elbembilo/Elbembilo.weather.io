@@ -1,8 +1,15 @@
 <template>
-  <div>
+  <!-- <div>
     {{ weatherType }}
   </div>
-  <!-- <div class="wrapperWeather">
+  <div>
+    {{ weatherDegreec }}
+  </div> -->
+  <div class="dayoftheWeek">{{ moment(weatherTime).format("dddd") }}</div>
+  <div class="wrapperWeather" v-if="weatherType === 'Clear'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
+    </div>
     <div class="icon sun-shower">
       <div class="cloud"></div>
       <div class="sun">
@@ -10,42 +17,83 @@
       </div>
       <div class="rain"></div>
     </div>
-  </div> -->
-
-  <!-- <div class="icon thunder-storm">
-    <div class="cloud"></div>
-    <div class="lightning">
-      <div class="bolt"></div>
-      <div class="bolt"></div>
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
     </div>
-  </div> -->
-  <!-- 
-  <div class="icon cloudy" v-if="weatherType=cloud">
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-  </div> -->
-
-  <!-- <div class="icon flurries">
-    <div class="cloud"></div>
-    <div class="snow">
-      <div class="flake"></div>
-      <div class="flake"></div>
+  </div>
+  <div class="wrapperWeather" v-if="weatherType === 'lightning'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
     </div>
-  </div> -->
-
-  <!-- <div class="icon sunny">
-    <div class="sun">
-      <div class="rays"></div>
+    <div class="icon thunder-storm">
+      <div class="cloud"></div>
+      <div class="lightning">
+        <div class="bolt"></div>
+        <div class="bolt"></div>
+      </div>
     </div>
-  </div> -->
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
+    </div>
+  </div>
 
-  <!-- <div class="icon rainy" v-if="weatherType === 'rain'">
-    <div class="cloud"></div>
-    <div class="rain"></div>
-  </div> -->
+  <div class="wrapperWeather" v-if="weatherType === 'Clouds'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
+    </div>
+    <div class="icon cloudy">
+      <div class="cloud"></div>
+      <div class="cloud"></div>
+    </div>
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
+    </div>
+  </div>
+
+  <div class="wrapperWeather" v-if="weatherType === 'Snow'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
+    </div>
+    <div class="icon flurries">
+      <div class="cloud"></div>
+      <div class="snow">
+        <div class="flake"></div>
+        <div class="flake"></div>
+      </div>
+    </div>
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
+    </div>
+  </div>
+  <div class="wrapperWeather" v-if="weatherType === 'sunny'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
+    </div>
+    <div class="icon sunny">
+      <div class="sun">
+        <div class="rays"></div>
+      </div>
+    </div>
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
+    </div>
+  </div>
+  <div class="wrapperWeather" v-if="weatherType === 'Rain'">
+    <div class="time">
+      {{ moment(weatherTime).format("LT") }}
+    </div>
+    <div class="icon rainy">
+      <div class="cloud"></div>
+      <div class="rain"></div>
+    </div>
+    <div class="temp">
+      {{ calcDegreec(weatherDegreec) }}
+    </div>
+  </div>
 </template>
 
 <script>
+var moment = require("moment");
 export default {
   name: "Weather",
   props: {
@@ -53,26 +101,51 @@ export default {
       type: String,
       required: true,
     },
+    weatherDegreec: {
+      type: Number,
+      required: true,
+    },
+    weatherTime: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
+      moment: moment,
       // degreec: [],
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    calcDegreec(temp) {
+      console.log(temp);
+      return Math.round(temp - 273.13).toFixed(0) + "  C";
+    },
+    // moment: function(dataTime) {
+    //   moment(weatherTime).format("LT");
+    // },
+  },
 };
 </script>
 <style lang="scss">
 .wrapperWeather {
   width: 300px;
+  color: rgb(46, 45, 45);
+  .temp {
+    font-size: 31px;
+    color: #ffffff;
+  }
+  .time {
+    color: #ffffff;
+  }
 }
 .icon {
   position: relative;
   display: inline-block;
   width: 12em;
   height: 10em;
-  font-size: 1em; /* control icon size here */
+  font-size: 20px; /* control icon size here */
 }
 
 .cloud {
