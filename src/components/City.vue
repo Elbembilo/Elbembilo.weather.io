@@ -48,6 +48,7 @@ export default {
       if (this.value && this.value?.length <= 2) return false;
       else {
         this.Visable = !this.Visable;
+
         console.log(this.value, "value");
         this.axios
           .get("https://geocode-maps.yandex.ru/1.x/", {
@@ -60,7 +61,7 @@ export default {
           .then((response) => {
             this.results =
               response.data.response.GeoObjectCollection.featureMember;
-            // console.log(this.results);
+            console.log(this.results);
           })
           .catch((error) => {
             console.log(error);
@@ -68,6 +69,7 @@ export default {
           });
       }
     },
+
     setType(result) {
       this.value =
         result.GeoObject.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AddressLine;
@@ -75,25 +77,36 @@ export default {
       let location = result.GeoObject.Point;
 
       let coordinatesSplit = location.pos.split(" ");
+      // this.$router.push({
+      //   path: "city",
+      //   query: { foo: coordinatesSplit[1] + coordinatesSplit[0] },
+      // });
+      this.$router.push({
+        query: { latlon: coordinatesSplit[1] + coordinatesSplit[0] },
+      });
       console.log(coordinatesSplit);
       this.axios
-        .get("https://api.openweathermap.org/data/2.5/forecast", {
+        .get("https://api.openweathermap.org/data/2.5/onecall", {
           params: {
             lat: coordinatesSplit[1],
             lon: coordinatesSplit[0],
-            cnt: "16",
+            exclude: "current",
             appid: "828beab3d73557dad05ad548fcded3ac",
           },
         })
+
         .then((response) => {
           // this.dataWeather = response.data.list;
           // console.log(response);
           // console.log(this.dataWeather);
-          this.$emit("weather", response.data.list);
+          this.$emit("weather", response.data.daily);
         });
 
       // console.log(result.GeoObject.description);
     },
+    // urlResult(coordinatesSplit) {
+    //   this.$router.push("/" + coordinatesSplit[1] + coordinatesSplit[0]);
+    // },
   },
 };
 </script>

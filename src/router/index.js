@@ -1,16 +1,24 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Logo from "@/components/Logo.vue";
+// import City from "@/components/City.vue";
+// import Weather from "@/components/Weather.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Logo",
+    name: "Weather",
     component: Logo,
   },
+  // {
+  //   path: "/:id",
+  //   name: "city",
+  //   component: City,
+  //   props: true,
+  // },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

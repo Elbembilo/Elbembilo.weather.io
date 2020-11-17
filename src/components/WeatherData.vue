@@ -1,14 +1,7 @@
 <template>
-  <!-- <div>
-    {{ weatherType }}
-  </div>
-  <div>
-    {{ weatherDegreec }}
-  </div> -->
-  <div class="dayoftheWeek">{{ moment(weatherTime).format("dddd") }}</div>
   <div class="wrapperWeather" v-if="weatherType === 'Clear'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon sun-shower">
       <div class="cloud"></div>
@@ -23,7 +16,7 @@
   </div>
   <div class="wrapperWeather" v-if="weatherType === 'lightning'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon thunder-storm">
       <div class="cloud"></div>
@@ -39,7 +32,7 @@
 
   <div class="wrapperWeather" v-if="weatherType === 'Clouds'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon cloudy">
       <div class="cloud"></div>
@@ -52,7 +45,7 @@
 
   <div class="wrapperWeather" v-if="weatherType === 'Snow'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon flurries">
       <div class="cloud"></div>
@@ -67,7 +60,7 @@
   </div>
   <div class="wrapperWeather" v-if="weatherType === 'sunny'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon sunny">
       <div class="sun">
@@ -80,7 +73,7 @@
   </div>
   <div class="wrapperWeather" v-if="weatherType === 'Rain'">
     <div class="time">
-      {{ moment(weatherTime).format("LT") }}
+      {{ moment(weatherTime).format("dddd") }}
     </div>
     <div class="icon rainy">
       <div class="cloud"></div>
@@ -132,12 +125,14 @@ export default {
 .wrapperWeather {
   width: 300px;
   color: rgb(46, 45, 45);
+  margin-right: 20px;
   .temp {
     font-size: 31px;
     color: #ffffff;
   }
   .time {
     color: #ffffff;
+    font-size: 20px;
   }
 }
 .icon {
@@ -145,7 +140,7 @@ export default {
   display: inline-block;
   width: 12em;
   height: 10em;
-  font-size: 20px; /* control icon size here */
+  font-size: 25px; /* control icon size here */
 }
 
 .cloud {

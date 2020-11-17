@@ -1,20 +1,21 @@
 <template>
-  <Logo />
-  <City @weather="weatherSet" />
-  <Weather :weatherData="weather" />
+  <router-view></router-view>
+  <!-- <Logo /> -->
+  <!-- <City @weather="weatherSet" />
+  <Weather :weatherData="weather" /> -->
 </template>
 
 <script>
 // @ is an alias to /src
-import Logo from "@/components/Logo";
-import City from "@/components/City";
-import Weather from "@/components/Weather";
+// import Logo from "@/components/Logo";
+// import City from "@/components/City";
+// import Weather from "@/components/Weather";
 export default {
   name: "Home",
   components: {
-    Logo,
-    City,
-    Weather,
+    // Logo,
+    // City,
+    // Weather,
   },
   data() {
     return {

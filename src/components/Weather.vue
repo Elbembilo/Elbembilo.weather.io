@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <!-- <div class="dayoftheWeek">{{ moment(pogoda.dt_txt).format("dddd") }}</div> -->
+    <div class="dayoftheWeek">
+      <p>
+        Сейчас
+        {{ moment().format("LT") }}
+      </p>
+    </div>
     <div
       class="carousel"
       :style="{ 'margin-left': '-' + 100 * currentSlideIndex + '%' }"
@@ -9,16 +14,24 @@
         v-for="(pogoda, index) in weatherData"
         :key="index"
         :weatherType="pogoda.weather[0].main"
-        :weatherDegreec="pogoda.main.temp"
-        :weatherTime="pogoda.dt_txt"
+        :weatherDegreec="pogoda.temp.day"
+        :weatherTime="pogoda.dt"
       />
     </div>
   </div>
   <button @click="prevSlide" class="prev">
-    <img src="@\assets\002-left-arrow.svg" alt="prev" />
+    <img
+      src="@\assets\002-left-arrow.svg"
+      alt="prev"
+      v-if="weatherData.length !== 0"
+    />
   </button>
   <button @click="nextSlide" class="next">
-    <img src="@\assets\001-arrow-point-to-right.svg" alt="next" />
+    <img
+      src="@\assets\001-arrow-point-to-right.svg"
+      alt="next"
+      v-if="weatherData.length !== 0"
+    />
   </button>
 </template>
 
@@ -45,11 +58,7 @@ export default {
       // degreec: [],
     };
   },
-  computed: {
-    // buttonShow: function(temp) {
-    //   if (temp) return (this.visible = !this.visible);
-    // },
-  },
+  computed: {},
   methods: {
     weatherCalc(temp) {
       console.log(typeof temp);
@@ -61,7 +70,7 @@ export default {
       }
     },
     nextSlide() {
-      if (this.currentSlideIndex > 2) {
+      if (this.currentSlideIndex >= 1) {
         this.currentSlideIndex = 0;
       } else {
         this.currentSlideIndex++;
@@ -77,16 +86,17 @@ export default {
 </script>
 <style lang="scss">
 .wrapper {
-  max-width: 1200px;
+  max-width: 1300px;
   overflow: hidden;
   margin: 0 auto;
+  padding-top: 50px;
   .carousel {
     display: flex;
     transition: all ease 0.5s;
   }
 }
 .prev {
-  right: 600px;
+  right: 620px;
 }
 .next {
   left: 600px;
