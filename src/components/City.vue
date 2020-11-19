@@ -31,6 +31,12 @@ export default {
         return [];
       },
     },
+    // latlonUrl: {
+    //   type: Array,
+    // },
+    // cityUrl: {
+    //   type: Array,
+    // },
   },
   data() {
     return {
@@ -42,6 +48,8 @@ export default {
       dataWeather: [],
       initialCityName: "",
       currentSlideIndex: 0,
+      latlonUrl: "",
+      cityUrl: "",
     };
   },
   computed: {},

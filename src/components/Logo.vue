@@ -1,8 +1,13 @@
 <template>
   <div class="header">
     <h1>Погода</h1>
-    <City @weather="weatherSet" />
-    <Weather :weatherData="weather" />
+    <City @weather="weatherSet" :latlonUrl="latlon" :cityUrl="city" />
+    <Weather
+      :weatherData="weather"
+      :idUrl="id"
+      :latlonUrl="latlon"
+      :cityUrl="city"
+    />
   </div>
 </template>
 <script>
@@ -25,6 +30,14 @@ export default {
       this.weather = weatherArray;
       console.log(weatherArray);
     },
+  },
+  beforeMount() {
+    let latlon = this.$route.query.latlon;
+    let city = this.$route.query.city;
+    let id = this.$route.query.id;
+    console.log(latlon);
+    console.log(city);
+    console.log(id);
   },
 };
 </script>
