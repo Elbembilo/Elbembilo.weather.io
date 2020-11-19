@@ -40,9 +40,16 @@ export default {
       errored: false,
       Visable: true,
       dataWeather: [],
+      initialCityName: "",
+      currentSlideIndex: 0,
     };
   },
   computed: {},
+  mounted() {
+    if (this.$route.query.name) {
+      this.value = this.$route.query.name;
+    }
+  },
   methods: {
     mySearchFunction() {
       if (this.value && this.value?.length <= 2) return false;
@@ -50,6 +57,9 @@ export default {
         this.Visable = !this.Visable;
 
         console.log(this.value, "value");
+        // this.$router.push({
+        //   query: { city: this.value },
+        // });
         this.axios
           .get("https://geocode-maps.yandex.ru/1.x/", {
             params: {
@@ -69,6 +79,14 @@ export default {
           });
       }
     },
+    // cityUrl(result) {
+    //   let initialCityName = result;
+    //   console.log(initialCityName);
+    //   console.log(result);
+    //   this.$router.push({
+    //     query: { city: result },
+    //   });
+    // },
 
     setType(result) {
       this.value =
@@ -77,14 +95,20 @@ export default {
       let location = result.GeoObject.Point;
 
       let coordinatesSplit = location.pos.split(" ");
-      // this.$router.push({
-      //   path: "city",
-      //   query: { foo: coordinatesSplit[1] + coordinatesSplit[0] },
-      // });
-      this.$router.push({
-        query: { latlon: coordinatesSplit[1] + coordinatesSplit[0] },
-      });
+      // this.cityUrl(this.value);
+      let latlon = this.$route.query.latlon;
+      console.log(latlon);
       console.log(coordinatesSplit);
+      console.log(this.$route.query);
+      console.log(this.value);
+
+      this.$router.push({
+        query: {
+          latlon: coordinatesSplit[1] + "," + coordinatesSplit[0],
+          id: this.currentSlideIndex,
+          city: this.value,
+        },
+      });
       this.axios
         .get("https://api.openweathermap.org/data/2.5/onecall", {
           params: {
@@ -104,10 +128,23 @@ export default {
 
       // console.log(result.GeoObject.description);
     },
-    // urlResult(coordinatesSplit) {
-    //   this.$router.push("/" + coordinatesSplit[1] + coordinatesSplit[0]);
-    // },
   },
+  // beforeMount() {
+  //   if (this.$routerquery=>this.value?.length)return false;
+  //   else{
+  //     let befMount = this.$route.query.split("");
+  //   console.log(befmount);
+  //   }
+
+  // // let latlonUrl = latlon.split(" ");
+  // this.axios.get("https://geocode-maps.yandex.ru/1.x/", {
+  //   params: {
+  //     format: "json",
+  //     apikey: "7d284bac-c91d-4a46-ae48-aba35ba0080e",
+  //     geocode: this.latlon,
+  //   },
+  // });
+  // },
 };
 </script>
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <H1>Погода</H1>
+    <h1>Погода</h1>
     <City @weather="weatherSet" />
     <Weather :weatherData="weather" />
   </div>

@@ -55,6 +55,7 @@ export default {
       visible: true,
       currentSlideIndex: 0,
       moment: moment,
+      latlon: "",
       // degreec: [],
     };
   },
@@ -72,11 +73,22 @@ export default {
     nextSlide() {
       if (this.currentSlideIndex >= 1) {
         this.currentSlideIndex = 0;
+        this.$router.push({
+          query: { latlon: " ", id: this.currentSlideIndex },
+        });
       } else {
         this.currentSlideIndex++;
         console.log(this.currentSlideIndex);
+        this.$router.push({
+          query: { latlon: "", id: this.currentSlideIndex },
+        });
       }
     },
+    // idexSlide(currentSlideIndex) {
+    //   this.$router.push({
+    //     query: { currentSlideIndex },
+    //   });
+    // },
 
     // weatherMain() {
     //   this.weather = weather.main;
