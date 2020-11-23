@@ -48,15 +48,6 @@ export default {
       type: Array,
       required: true,
     },
-    // idUrl: {
-    //   type: Array,
-    // },
-    // latlonUrl: {
-    //   type: Array,
-    // },
-    // cityUrl: {
-    //   type: Array,
-    // },
   },
 
   data() {
@@ -64,10 +55,7 @@ export default {
       visible: true,
       currentSlideIndex: 0,
       moment: moment,
-      // latlonUrl: "",
-      // cityUrl: "",
-      // idUrl: "",
-      // degreec: [],
+      degreec: [],
     };
   },
   computed: {},
@@ -75,12 +63,12 @@ export default {
     sliderId() {
       this.nextSlide(this.currentSlideIndex);
 
-      console.log(this.sliderId);
+      // console.log(this.sliderId);
     },
   },
   methods: {
     weatherCalc(temp) {
-      console.log(typeof temp);
+      // console.log(typeof temp);
       return (temp - 273.13).toFixed(2);
     },
     prevSlide() {
@@ -98,7 +86,7 @@ export default {
         });
       } else {
         this.currentSlideIndex++;
-        console.log(this.currentSlideIndex);
+        // console.log(this.currentSlideIndex);
         // this.$router.push({
         //   query: {
         //     latlon: this.latlonUrl,
@@ -108,23 +96,6 @@ export default {
         // });
       }
     },
-    // test() {
-    //   let latlonTest = latlonUrl;
-    //   let cityTest = cityUrl;
-    //   let idTest = idUrl;
-    //   console.log(latlonTest);
-    //   console.log(cityTest);
-    //   console.log(idTest);
-    // },
-    // idexSlide(currentSlideIndex) {
-    //   this.$router.push({
-    //     query: { currentSlideIndex },
-    //   });
-    // },
-
-    // weatherMain() {
-    //   this.weather = weather.main;
-    // },
   },
 };
 </script>

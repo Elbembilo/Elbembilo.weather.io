@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Logo from "@/components/Logo.vue";
-// import City from "@/components/City.vue";
+// import Logo from "@/components/Logo.vue";
+import App from "@/App.vue";
 // import Weather from "@/components/Weather.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Weather",
-    component: Logo,
+    name: "App",
+    component: App,
   },
   // {
   //   path: "/:id",

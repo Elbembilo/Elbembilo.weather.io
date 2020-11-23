@@ -1,13 +1,7 @@
 <template>
   <div class="header">
-    <h1>Погода</h1>
-    <City @weather="weatherSet" :latlonUrl="latlon" :cityUrl="city" />
-    <Weather
-      :weatherData="weather"
-      :idUrl="id"
-      :latlonUrl="latlon"
-      :cityUrl="city"
-    />
+    <City @weather="weatherSet" />
+    <Weather :weatherData="weather" />
   </div>
 </template>
 <script>
@@ -31,14 +25,42 @@ export default {
       console.log(weatherArray);
     },
   },
-  beforeMount() {
-    let latlon = this.$route.query.latlon;
-    let city = this.$route.query.city;
-    let id = this.$route.query.id;
-    console.log(latlon);
-    console.log(city);
-    console.log(id);
-  },
+  // beforeMount() {
+  //   const { latlon, city, id } = this.$route.query;
+  //    this.$router.push(Object.assign({
+  //       query: {
+  //         latlon: coordinatesSplit[1] + "," + coordinatesSplit[0],
+  //         id: this.currentSlideIndex,
+  //         city: this.value,
+  //       },
+  //     });
+  //   console.log(latlon);
+  //   console.log(city);
+  //   console.log(id);
+  //   this.axios.get("https://geocode-maps.yandex.ru/1.x/", {
+  //     params: {
+  //       format: "json",
+  //       apikey: "7d284bac-c91d-4a46-ae48-aba35ba0080e",
+  //       geocode: this.city,
+  //     },
+  //   });
+  //   // .then((response) => {
+  //   //         this.results =
+  //   //           response.data.response.GeoObjectCollection.featureMember;
+  //   //         console.log(this.results);
+  //   //       })
+  // },
+  // mounted() {
+  //  if ( !Object.keys(this.$route.query).length ) {
+  //   return;
+  // }
+  // const{ latlon, city, id}=this .$route.query;
+  // await this.$route.push(Object.assing({
+  //   latlon: latlon,
+  //   city: city,
+  //   id:id    },
+  //   ));
+  // },
 };
 </script>
 <style lang="scss">

@@ -1,26 +1,23 @@
 <template>
-  <router-view></router-view>
-  <!-- <Logo /> -->
-  <!-- <City @weather="weatherSet" />
-  <Weather :weatherData="weather" /> -->
+  <h1>Погода</h1>
+  <Search @weather="weatherSet" />
+  <Carousel :weatherData="weather" />
 </template>
 
 <script>
 // @ is an alias to /src
-// import Logo from "@/components/Logo";
-// import City from "@/components/City";
-// import Weather from "@/components/Weather";
+
+import Search from "@/components/Search";
+import Carousel from "@/components/Carousel";
 export default {
   name: "Home",
   components: {
-    // Logo,
-    // City,
-    // Weather,
+    Search,
+    Carousel,
   },
   data() {
     return {
       weather: [],
-      latlon: [],
     };
   },
   methods: {
@@ -29,6 +26,10 @@ export default {
       console.log(weatherArray);
     },
   },
+  // beforeMount() {
+
+  //   console.log(this.$route.query);
+  // },
 };
 </script>
 
@@ -46,5 +47,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ffffff;
+}
+
+h1 {
+  margin-top: 250px;
+  color: #fff;
+  font-weight: 100;
+  font-size: 60px;
 }
 </style>

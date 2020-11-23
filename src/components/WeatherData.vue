@@ -112,7 +112,7 @@ export default {
   computed: {},
   methods: {
     calcDegreec(temp) {
-      console.log(temp);
+      // console.log(temp);
       return Math.round(temp - 273.13).toFixed(0) + "  C";
     },
     // moment: function(dataTime) {
