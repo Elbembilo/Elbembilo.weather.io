@@ -60,9 +60,9 @@ export default {
   },
   computed: {},
   watch: {
-    sliderId() {
-      this.nextSlide(this.currentSlideIndex);
-
+    sliderId(currentSlideIndex) {
+      this.nextSlide(currentSlideIndex);
+      console.log(this.currentSlideIndex);
       // console.log(this.sliderId);
     },
   },
@@ -79,14 +79,9 @@ export default {
     nextSlide() {
       if (this.currentSlideIndex >= 1) {
         this.currentSlideIndex = 0;
-        this.$router.push({
-          query: {
-            id: this.currentSlideIndex,
-          },
-        });
       } else {
         this.currentSlideIndex++;
-        // console.log(this.currentSlideIndex);
+        console.log(this.currentSlideIndex);
         // this.$router.push({
         //   query: {
         //     latlon: this.latlonUrl,
