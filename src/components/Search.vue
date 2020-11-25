@@ -42,7 +42,7 @@ export default {
       Visable: true,
       dataWeather: [],
       currentSlideIndex: 0,
-      id: "",
+      carouselId: "",
     };
   },
   computed: {},
@@ -99,11 +99,12 @@ export default {
       let location = result.GeoObject.Point;
       console.log(location);
       let coordinatesSplit = location.pos.split(" ");
+      let id = this.carouselId;
       this.$router.push({
         query: {
           city: this.value,
           latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
-          // lon: coordinatesSplit[0],
+          id: id,
         },
       });
       this.axios

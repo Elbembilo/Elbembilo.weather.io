@@ -1,7 +1,7 @@
 <template>
   <h1>Погода</h1>
-  <Search @weather="weatherSet" />
-  <Carousel :weatherData="weather" />
+  <Search @weather="weatherSet" :currentSlideIndex="currentSlideIndex" />
+  <Carousel :weatherData="weather" @currentSlideIndex="currentSlideIndexSet" />
 </template>
 
 <script>
@@ -18,9 +18,15 @@ export default {
   data() {
     return {
       weather: [],
+      currentSlideIndex: "",
     };
   },
   methods: {
+    currentSlideIndexSet(idNumber) {
+      this.currentSlideIndex = idNumber;
+      console.log(idNumber);
+    },
+
     weatherSet(weatherArray) {
       this.weather = weatherArray;
       console.log(weatherArray);

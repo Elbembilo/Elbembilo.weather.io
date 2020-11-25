@@ -10,7 +10,7 @@
       class="carousel"
       :style="{ 'margin-left': '-' + 100 * currentSlideIndex + '%' }"
     >
-      <WeatherData
+      <WeatherIcon
         v-for="(pogoda, index) in weatherData"
         :key="index"
         :weatherType="pogoda.weather[0].main"
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import WeatherData from "@/components/WeatherData";
+import WeatherIcon from "@/components/WeatherIcon";
 var moment = require("moment");
 export default {
   name: "Weather",
   components: {
-    WeatherData,
+    WeatherIcon,
   },
   props: {
     weatherData: {
@@ -51,13 +51,13 @@ export default {
   },
 
   computed: {},
-  watch: {
-    currentSlideIndex() {
-      console.log(this.currentSlideIndex);
-      // console.log(this.sliderId);
-      this.$emit("id", this.currentSlideIndex);
-    },
-  },
+  // watch: {
+  //   currentSlideIndex() {
+  //     console.log(this.currentSlideIndex);
+  //     // console.log(this.sliderId);
+  //     this.$emit("id", this.currentSlideIndex);
+  //   },
+  // },
   methods: {
     weatherCalc(temp) {
       // console.log(typeof temp);
@@ -66,15 +66,16 @@ export default {
     prevSlide() {
       if (this.currentSlideIndex > 0) {
         this.currentSlideIndex--;
-        this.changeId();
+        this.$emit("current-slide-index", this.currentSlideIndex);
       }
     },
     nextSlide() {
       if (this.currentSlideIndex >= 1) {
         this.currentSlideIndex = 0;
+        this.$emit("current-slide-index", this.currentSlideIndex);
       } else {
         this.currentSlideIndex++;
-        this.changeId();
+        this.$emit("current-slide-index", this.currentSlideIndex);
         // console.log(this.currentSlideIndex);
         // this.$router.push({
         //   query: {
@@ -85,18 +86,18 @@ export default {
         // });
       }
     },
-    async changeId() {
-      const { id, ...routerParams } = this.$route.query;
-      await this.$router.push({
-        query: Object.assign(
-          {
-            id: this.currentSlideIndex,
-          },
-          routerParams
-        ),
-      });
-      id;
-    },
+    // async changeId() {
+    //   const { id, ...routerParams } = this.$route.query;
+    //   await this.$router.push({
+    //     query: Object.assign(
+    //       {
+    //         id: this.currentSlideIndex,
+    //       },
+    //       routerParams
+    //     ),
+    //   });
+    //   id;
+    // },
   },
   data() {
     return {

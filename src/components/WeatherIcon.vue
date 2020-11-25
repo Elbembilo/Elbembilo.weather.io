@@ -73,7 +73,7 @@
   </div>
   <div class="wrapperWeather" v-if="weatherType === 'Rain'">
     <div class="time">
-      {{ moment(weatherTime).format("dddd") }}
+      {{ moment.unix(weatherTime).format("dddd") }}
     </div>
     <div class="icon rainy">
       <div class="cloud"></div>
