@@ -50,20 +50,12 @@ export default {
     },
   },
 
-  data() {
-    return {
-      visible: true,
-      currentSlideIndex: 0,
-      moment: moment,
-      degreec: [],
-    };
-  },
   computed: {},
   watch: {
-    sliderId(currentSlideIndex) {
-      this.nextSlide(currentSlideIndex);
+    currentSlideIndex() {
       console.log(this.currentSlideIndex);
       // console.log(this.sliderId);
+      this.$emit("id", this.currentSlideIndex);
     },
   },
   methods: {
@@ -74,6 +66,7 @@ export default {
     prevSlide() {
       if (this.currentSlideIndex > 0) {
         this.currentSlideIndex--;
+        this.changeId();
       }
     },
     nextSlide() {
@@ -81,16 +74,38 @@ export default {
         this.currentSlideIndex = 0;
       } else {
         this.currentSlideIndex++;
-        console.log(this.currentSlideIndex);
+        this.changeId();
+        // console.log(this.currentSlideIndex);
         // this.$router.push({
         //   query: {
-        //     latlon: this.latlonUrl,
+        //     // latlon: this.latlonUrl,
         //     id: this.currentSlideIndex,
-        //     city: this.cityUrl,
+        //     // city: this.cityUrl,
         //   },
         // });
       }
     },
+    async changeId() {
+      const { id, ...routerParams } = this.$route.query;
+      await this.$router.push({
+        query: Object.assign(
+          {
+            id: this.currentSlideIndex,
+          },
+          routerParams
+        ),
+      });
+      id;
+    },
+  },
+  data() {
+    return {
+      visible: true,
+
+      moment: moment,
+      degreec: [],
+      currentSlideIndex: 0,
+    };
   },
 };
 </script>

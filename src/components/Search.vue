@@ -5,7 +5,7 @@
         type="text"
         placeholder="Введите город"
         v-model="value"
-        @keyup="mySearchFunction()"
+        @keyup="setResaults()"
       />
       <ul id="example-1">
         <li
@@ -42,66 +42,30 @@ export default {
       Visable: true,
       dataWeather: [],
       currentSlideIndex: 0,
+      id: "",
     };
   },
   computed: {},
   watch: {
     $route(to) {
       this.value = to.query.city;
-      this.mySearchFunction();
-      this.latlon = to.query.latlon;
-      // this.lon = to.query.lon;
-      console.log(this.latlon);
+      this.mySearchFunction().then((res) => {
+        this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+      });
     },
-    // setType() {
-    //   this.Visable = !this.Visable;
-    //   let location = result.GeoObject.Point;
-    //   this.axios
-    //     .get("https://api.openweathermap.org/data/2.5/onecall", {
-    //       params: {
-    //         lat: lat,
-    //         lon: lon,
-    //         exclude: "current",
-    //         appid: "828beab3d73557dad05ad548fcded3ac",
-    //       },
-    //     })
+  },
 
-    //     .then((response) => {
-    //       this.$emit("weather", response.data.daily);
-    //     });
-    // },
-  },
-  mounted() {
-    console.log(this.lat, this.lon);
-    // if (!Object.keys(this.$route.query).length) {
-    //   return;
-    // }
-    // console.log(this.$route.query.latlon);
-    // this.value = this.$route.query.latlon;
-    // this.coordinatesSplit = this.$route.query.latlon;
-    // this.mySearchFunction();
-    // this.setType();
-  },
-  beforeMount() {
-    console.log(this.lat, this.lon);
-  },
   methods: {
+    setResaults() {
+      this.mySearchFunction().then((res) => {
+        this.results = res?.data?.response.GeoObjectCollection.featureMember;
+      });
+    },
     async mySearchFunction() {
       if (this.value && this.value?.length <= 2) return false;
       else {
         this.Visable = !this.Visable;
-
-        // console.log(this.value, "value");
-
-        // this.axios
-        //   .get("https://geocode-maps.yandex.ru/1.x/", {
-        //     params: {
-        //       format: "json",
-        //       apikey: "7d284bac-c91d-4a46-ae48-aba35ba0080e",
-        //       geocode: this.value,
-        //     },
-        //   })
-        const response = await this.axios.get(
+        const res = await this.axios.get(
           "https://geocode-maps.yandex.ru/1.x/",
           {
             params: {
@@ -111,7 +75,7 @@ export default {
             },
           }
         );
-        return response;
+        return res;
         // .then((response) => {
         //   this.results =
         //     response.data.response.GeoObjectCollection.featureMember;
@@ -122,6 +86,10 @@ export default {
         //   this.errored = true;
         // });
       }
+    },
+    idSlider(idArray) {
+      this.id = this.idArray;
+      console.log(idArray);
     },
 
     setType(result) {
