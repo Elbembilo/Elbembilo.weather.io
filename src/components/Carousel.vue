@@ -66,17 +66,21 @@ export default {
     prevSlide() {
       if (this.currentSlideIndex > 0) {
         this.currentSlideIndex--;
-        this.$emit("current-slide-index", this.currentSlideIndex);
+        // this.$emit("current-slide-index-emit", this.currentSlideIndex);
+        this.changeId();
       }
     },
     nextSlide() {
       if (this.currentSlideIndex >= 1) {
         this.currentSlideIndex = 0;
-        this.$emit("current-slide-index", this.currentSlideIndex);
+        // this.$emit("current-slide-index-emit", this.currentSlideIndex);
+        this.changeId();
       } else {
         this.currentSlideIndex++;
-        this.$emit("current-slide-index", this.currentSlideIndex);
+        // this.$emit("current-slide-index-emit", this.currentSlideIndex);
+        this.changeId();
         // console.log(this.currentSlideIndex);
+        //
         // this.$router.push({
         //   query: {
         //     // latlon: this.latlonUrl,
@@ -86,26 +90,26 @@ export default {
         // });
       }
     },
-    // async changeId() {
-    //   const { id, ...routerParams } = this.$route.query;
-    //   await this.$router.push({
-    //     query: Object.assign(
-    //       {
-    //         id: this.currentSlideIndex,
-    //       },
-    //       routerParams
-    //     ),
-    //   });
-    //   id;
-    // },
+    async changeId() {
+      const { id, ...routerParams } = this.$route.query;
+      await this.$router.push({
+        query: Object.assign(
+          {
+            id: this.currentSlideIndex,
+          },
+          routerParams
+        ),
+      });
+      id;
+    },
   },
   data() {
     return {
       visible: true,
-
       moment: moment,
       degreec: [],
-      currentSlideIndex: 0,
+
+      currentSlideIndex: this.$route.query.page,
     };
   },
 };

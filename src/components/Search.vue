@@ -31,6 +31,9 @@ export default {
       default() {
         return [];
       },
+      currentSlideIndexProps: {
+        type: Number,
+      },
     },
   },
   data() {
@@ -42,7 +45,6 @@ export default {
       Visable: true,
       dataWeather: [],
       currentSlideIndex: 0,
-      carouselId: "",
     };
   },
   computed: {},
@@ -54,6 +56,18 @@ export default {
       });
     },
   },
+  // beforeRouteEnter(to,from,next) {
+  //   console.log(this.$router.query);
+  //   next(vm=>{
+  //     if(Object.keys(vm.route.query).lenght>0){
+
+  //     }
+  //   })
+  //   // this.value = to.query.city;
+  //   // this.mySearchFunction().then((res) => {
+  //   //   this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+  //   // });
+  // },
 
   methods: {
     setResaults() {
@@ -99,12 +113,12 @@ export default {
       let location = result.GeoObject.Point;
       console.log(location);
       let coordinatesSplit = location.pos.split(" ");
-      let id = this.carouselId;
+      // let id = this.currentSlideIndexProps;
       this.$router.push({
         query: {
           city: this.value,
           latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
-          id: id,
+          id: this.currentSlideIndex,
         },
       });
       this.axios
@@ -116,19 +130,11 @@ export default {
             appid: "828beab3d73557dad05ad548fcded3ac",
           },
         })
-
         .then((response) => {
           this.$emit("weather", response.data.daily);
         });
     },
   },
-
-  // beforeCreate() {
-  //   console.log(this.$route.query);
-  //   // this.value = this.$route.query.city;
-
-  //   // this.mySearchFunction();
-  // },
 };
 </script>
 <style lang="scss">
