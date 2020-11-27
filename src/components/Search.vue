@@ -44,13 +44,13 @@ export default {
       errored: false,
       Visable: true,
       dataWeather: [],
-      id: Number,
+      id: 0,
     };
   },
   computed: {},
   watch: {
     $route(to) {
-      if (to.$route.query.length > 0) {
+      if (Object.keys(to.query).length > 0) {
         this.value = to.query.city;
         this.id = to.query.id;
         this.mySearchFunction().then((res) => {
@@ -119,7 +119,7 @@ export default {
       // console.log(location);
       let coordinatesSplit = location.pos.split(" ");
       // let id = this.currentSlideIndexProps;
-      console.log(this.id);
+      // console.log(this.id);
       this.$router.push({
         query: {
           city: this.value,

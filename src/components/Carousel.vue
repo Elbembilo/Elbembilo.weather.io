@@ -52,11 +52,14 @@ export default {
 
   computed: {},
 
-  // watch: {
-  //   $route(to) {
-  //     this.currentSlideIndex = to.query.id;
-  //   },
-  // },
+  watch: {
+    $route(to) {
+      console.log(typeof parseInt(to.query.id) == Number);
+      if (to.query.id && typeof parseInt(to.query.id) === Number) {
+        this.currentSlideIndex = to.query.id;
+      }
+    },
+  },
   methods: {
     weatherCalc(temp) {
       return (temp - 273.13).toFixed(2);
@@ -80,7 +83,7 @@ export default {
       }
     },
     async changeId() {
-      console.log(this.currentSlideIndex);
+      // console.log(this.currentSlideIndex);
       const { id, ...routerParams } = this.$route.query;
       await this.$router.push({
         query: Object.assign(routerParams, {
