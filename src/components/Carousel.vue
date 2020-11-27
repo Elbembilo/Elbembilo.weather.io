@@ -79,10 +79,10 @@ export default {
         this.changeId();
       }
     },
-    changeId() {
+    async changeId() {
       console.log(this.currentSlideIndex);
       const { id, ...routerParams } = this.$route.query;
-      this.$router.push({
+      await this.$router.push({
         query: Object.assign(routerParams, {
           id: this.currentSlideIndex,
         }),

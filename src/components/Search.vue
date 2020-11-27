@@ -50,26 +50,32 @@ export default {
   computed: {},
   watch: {
     $route(to) {
-      // if this.$route.query.length > 0
-      // .then
-      this.value = to.query.city;
-      this.id = to.query.id;
-      this.mySearchFunction().then((res) => {
-        this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
-      });
+      if (to.$route.query.length > 0) {
+        this.value = to.query.city;
+        this.id = to.query.id;
+        this.mySearchFunction().then((res) => {
+          this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+        });
+      }
     },
+    //   if (to.query.lenght > 0) {
+    //     this.value = to.query.city;
+    //     this.mySearchFunction().then((res) => {
+    //       this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+    //     });
+    //   }
+    // },
   },
-  // beforeRouteEnter() {
-  //   console.log($route.query);
-  //   //   next(vm=>{
-  //   //     if(Object.keys(vm.route.query).lenght>0){
-
-  //   //     }
-  //   //   })
-  //   //   // this.value = to.query.city;
-  //   //   // this.mySearchFunction().then((res) => {
-  //   //   //   this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
-  //   //   // });
+  // beforeRouteEnter(to, from, next) {
+  //   next((vm) => {
+  //     console.log(vm.$route.query);
+  //     if (Object.keys(vm.route.query).lenght > 0) {
+  //       this.value = vm.query.city;
+  //       this.mySearchFunction().then((res) => {
+  //         this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+  //       });
+  //     }
+  //   });
   // },
 
   methods: {
@@ -113,12 +119,12 @@ export default {
       // console.log(location);
       let coordinatesSplit = location.pos.split(" ");
       // let id = this.currentSlideIndexProps;
-      // console.log(this.id);
+      console.log(this.id);
       this.$router.push({
         query: {
           city: this.value,
           // latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
-          id: this.$route.id,
+          id: this.$route.query.id,
         },
       });
       this.axios
