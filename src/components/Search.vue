@@ -31,9 +31,9 @@ export default {
       default() {
         return [];
       },
-      currentSlideIndexProps: {
-        type: Number,
-      },
+      // currentSlideIndexProps: {
+      //   type: Number,
+      // },
     },
   },
   data() {
@@ -44,29 +44,32 @@ export default {
       errored: false,
       Visable: true,
       dataWeather: [],
-      currentSlideIndex: 0,
+      id: Number,
     };
   },
   computed: {},
   watch: {
     $route(to) {
+      // if this.$route.query.length > 0
+      // .then
       this.value = to.query.city;
+      this.id = to.query.id;
       this.mySearchFunction().then((res) => {
         this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
       });
     },
   },
-  // beforeRouteEnter(to,from,next) {
-  //   console.log(this.$router.query);
-  //   next(vm=>{
-  //     if(Object.keys(vm.route.query).lenght>0){
+  // beforeRouteEnter() {
+  //   console.log($route.query);
+  //   //   next(vm=>{
+  //   //     if(Object.keys(vm.route.query).lenght>0){
 
-  //     }
-  //   })
-  //   // this.value = to.query.city;
-  //   // this.mySearchFunction().then((res) => {
-  //   //   this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
-  //   // });
+  //   //     }
+  //   //   })
+  //   //   // this.value = to.query.city;
+  //   //   // this.mySearchFunction().then((res) => {
+  //   //   //   this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
+  //   //   // });
   // },
 
   methods: {
@@ -76,7 +79,7 @@ export default {
       });
     },
     async mySearchFunction() {
-      if (this.value && this.value?.length <= 2) return false;
+      if (this.value && this.value?.length <= 3) return false;
       else {
         this.Visable = !this.Visable;
         const res = await this.axios.get(
@@ -101,24 +104,21 @@ export default {
         // });
       }
     },
-    idSlider(idArray) {
-      this.id = this.idArray;
-      console.log(idArray);
-    },
 
     setType(result) {
       this.value =
         result.GeoObject.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AddressLine;
       this.Visable = !this.Visable;
       let location = result.GeoObject.Point;
-      console.log(location);
+      // console.log(location);
       let coordinatesSplit = location.pos.split(" ");
       // let id = this.currentSlideIndexProps;
+      // console.log(this.id);
       this.$router.push({
         query: {
           city: this.value,
-          latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
-          id: this.currentSlideIndex,
+          // latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
+          id: this.$route.id,
         },
       });
       this.axios

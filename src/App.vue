@@ -29,7 +29,7 @@ export default {
 
     weatherSet(weatherArray) {
       this.weather = weatherArray;
-      console.log(weatherArray);
+      // console.log(weatherArray);
     },
   },
   // beforeMount() {

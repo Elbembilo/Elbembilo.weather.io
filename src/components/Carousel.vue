@@ -51,16 +51,14 @@ export default {
   },
 
   computed: {},
+
   // watch: {
-  //   currentSlideIndex() {
-  //     console.log(this.currentSlideIndex);
-  //     // console.log(this.sliderId);
-  //     this.$emit("id", this.currentSlideIndex);
+  //   $route(to) {
+  //     this.currentSlideIndex = to.query.id;
   //   },
   // },
   methods: {
     weatherCalc(temp) {
-      // console.log(typeof temp);
       return (temp - 273.13).toFixed(2);
     },
     prevSlide() {
@@ -79,26 +77,15 @@ export default {
         this.currentSlideIndex++;
         // this.$emit("current-slide-index-emit", this.currentSlideIndex);
         this.changeId();
-        // console.log(this.currentSlideIndex);
-        //
-        // this.$router.push({
-        //   query: {
-        //     // latlon: this.latlonUrl,
-        //     id: this.currentSlideIndex,
-        //     // city: this.cityUrl,
-        //   },
-        // });
       }
     },
-    async changeId() {
+    changeId() {
+      console.log(this.currentSlideIndex);
       const { id, ...routerParams } = this.$route.query;
-      await this.$router.push({
-        query: Object.assign(
-          {
-            id: this.currentSlideIndex,
-          },
-          routerParams
-        ),
+      this.$router.push({
+        query: Object.assign(routerParams, {
+          id: this.currentSlideIndex,
+        }),
       });
       id;
     },
@@ -108,8 +95,7 @@ export default {
       visible: true,
       moment: moment,
       degreec: [],
-
-      currentSlideIndex: this.$route.query.page,
+      currentSlideIndex: 0,
     };
   },
 };
