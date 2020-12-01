@@ -1,38 +1,40 @@
 <template>
-  <div class="wrapper">
-    <div class="dayoftheWeek">
-      <p>
-        Сейчас
-        {{ moment().format("LT") }}
-      </p>
+  <div class="papa" v-show="visible">
+    <div class="wrapper">
+      <div class="dayoftheWeek">
+        <p>
+          Сейчас
+          {{ moment().format("LT") }}
+        </p>
+      </div>
+      <div
+        class="carousel"
+        :style="{ 'margin-left': '-' + 100 * currentSlideIndex + '%' }"
+      >
+        <WeatherIcon
+          v-for="(pogoda, index) in weatherData"
+          :key="index"
+          :weatherType="pogoda.weather[0].main"
+          :weatherDegreec="pogoda.temp.day"
+          :weatherTime="pogoda.dt"
+        />
+      </div>
     </div>
-    <div
-      class="carousel"
-      :style="{ 'margin-left': '-' + 100 * currentSlideIndex + '%' }"
-    >
-      <WeatherIcon
-        v-for="(pogoda, index) in weatherData"
-        :key="index"
-        :weatherType="pogoda.weather[0].main"
-        :weatherDegreec="pogoda.temp.day"
-        :weatherTime="pogoda.dt"
+    <button @click="prevSlide" class="prev">
+      <img
+        src="@\assets\002-left-arrow.svg"
+        alt="prev"
+        v-if="weatherData.length !== 0"
       />
-    </div>
+    </button>
+    <button @click="nextSlide" class="next">
+      <img
+        src="@\assets\001-arrow-point-to-right.svg"
+        alt="next"
+        v-if="weatherData.length !== 0"
+      />
+    </button>
   </div>
-  <button @click="prevSlide" class="prev">
-    <img
-      src="@\assets\002-left-arrow.svg"
-      alt="prev"
-      v-if="weatherData.length !== 0"
-    />
-  </button>
-  <button @click="nextSlide" class="next">
-    <img
-      src="@\assets\001-arrow-point-to-right.svg"
-      alt="next"
-      v-if="weatherData.length !== 0"
-    />
-  </button>
 </template>
 
 <script>
@@ -54,9 +56,12 @@ export default {
 
   watch: {
     $route(to) {
-      console.log(typeof parseInt(to.query.id) == Number);
-      if (to.query.id && typeof parseInt(to.query.id) === Number) {
+      // console.log(typeof parseInt(to.query.id) === "number");
+      if (!to.query.city) {
+        this.visible = false;
+      } else if (to.query.id && typeof parseInt(to.query.city) === "number") {
         this.currentSlideIndex = to.query.id;
+        this.visible = true;
       }
     },
   },
@@ -95,7 +100,7 @@ export default {
   },
   data() {
     return {
-      visible: true,
+      visible: false,
       moment: moment,
       degreec: [],
       currentSlideIndex: 0,

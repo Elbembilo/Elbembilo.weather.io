@@ -7,12 +7,11 @@
         v-model="value"
         @keyup="setResaults()"
       />
-      <ul id="example-1">
+      <ul id="example-1" v-show="Visable">
         <li
           v-for="(result, index) in results"
           :key="index"
           v-on:click="setType(result)"
-          v-show="Visable"
         >
           {{ result.GeoObject.metaDataProperty.GeocoderMetaData.text }}
         </li>
@@ -31,9 +30,6 @@ export default {
       default() {
         return [];
       },
-      // currentSlideIndexProps: {
-      //   type: Number,
-      // },
     },
   },
   data() {
@@ -53,18 +49,18 @@ export default {
       if (Object.keys(to.query).length > 0) {
         this.value = to.query.city;
         this.id = to.query.id;
-        this.mySearchFunction().then((res) => {
+        this.mySearchFunction(false).then((res) => {
           this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
         });
       }
     },
-    //   if (to.query.lenght > 0) {
-    //     this.value = to.query.city;
-    //     this.mySearchFunction().then((res) => {
-    //       this.setType(res.data.response.GeoObjectCollection.featureMember[0]);
-    //     });
-    //   }
-    // },
+    value() {
+      if (this.value <= 0) {
+        this.$router.push({ path: "/" });
+
+        // clearUrl();
+      }
+    },
   },
   // beforeRouteEnter(to, from, next) {
   //   next((vm) => {
@@ -79,15 +75,21 @@ export default {
   // },
 
   methods: {
+    // clearUrl() {
+    //   this.$route.push("/");
+    //   console.log(typeof this.clearUrl);
+    // },
     setResaults() {
       this.mySearchFunction().then((res) => {
         this.results = res?.data?.response.GeoObjectCollection.featureMember;
       });
     },
-    async mySearchFunction() {
-      if (this.value && this.value?.length <= 3) return false;
+    async mySearchFunction(showList = true) {
+      if (!this.value || this.value?.length <= 2) return false;
       else {
-        this.Visable = !this.Visable;
+        if (showList) {
+          this.Visable = true;
+        }
         const res = await this.axios.get(
           "https://geocode-maps.yandex.ru/1.x/",
           {
@@ -114,17 +116,16 @@ export default {
     setType(result) {
       this.value =
         result.GeoObject.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AddressLine;
-      this.Visable = !this.Visable;
+      this.Visable = false;
       let location = result.GeoObject.Point;
       // console.log(location);
       let coordinatesSplit = location.pos.split(" ");
-      // let id = this.currentSlideIndexProps;
       // console.log(this.id);
       this.$router.push({
         query: {
           city: this.value,
           // latlon: coordinatesSplit[1] + " " + coordinatesSplit[0],
-          id: this.$route.query.id,
+          id: this.$route.query.id || 0,
         },
       });
       this.axios
@@ -147,16 +148,19 @@ export default {
 .search {
   form {
     form:focus {
+      justify-content: center;
       border: 0px solid;
     }
     input {
-      width: 800px;
+      // position: absolute;
+      width: 1080px;
       font-size: 21px;
       border-radius: 5px;
       margin: 10px auto;
       display: block;
       margin-bottom: 0px;
       padding: 10px 13px;
+      left: 400px;
     }
     input:focus {
       outline: none;
@@ -164,11 +168,16 @@ export default {
     ul {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      position: absolute;
+      z-index: 3;
       margin-top: 0px;
+      align-items: flex-start;
+      // margin-top: 60px;
       padding-left: 0px;
       background-color: #fff;
       border-radius: 5px;
+      width: 1078px;
+      left: 412px;
       li {
         width: 100%;
         list-style-type: none;

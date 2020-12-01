@@ -56,7 +56,7 @@ body {
 }
 
 h1 {
-  margin-top: 250px;
+  margin-top: 100px;
   color: #fff;
   font-weight: 100;
   font-size: 60px;
